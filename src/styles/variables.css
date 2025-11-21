@@ -40,3 +40,15 @@
     --radius-md: 12px;
     --radius-lg: 20px;
 }
+
+[data-theme="dark"] {
+    --color-bg: #1a1a1a;
+    --color-text-main: #e0e0e0;
+    --color-text-secondary: #a0a0a0;
+    --color-card-bg: #2d2d2d;
+    --color-border: #404040;
+    --color-primary: #b5c99a;
+    --color-primary-light: #4a4a4a;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

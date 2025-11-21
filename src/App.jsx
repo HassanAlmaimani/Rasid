@@ -4,12 +4,14 @@ import Dashboard from './components/Dashboard';
 import TransactionForm from './components/TransactionForm';
 import BudgetManager from './components/BudgetManager';
 import MonthlySummary from './components/MonthlySummary';
-import { LayoutDashboard, PlusCircle, Wallet, PieChart, Languages, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, Wallet, PieChart, Languages, TrendingUp, Moon, Sun } from 'lucide-react';
 import { useLanguage } from './contexts/LanguageContext';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 
-function App() {
+function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const { t, language, toggleLanguage } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -65,6 +67,11 @@ function App() {
 
           <div className="nav-divider" style={{ margin: '1rem 0', marginTop: 'auto', borderTop: '1px solid var(--color-border)' }}></div>
 
+          <button className="nav-item" onClick={toggleTheme}>
+            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+          </button>
+
           <p className="language-label">{t('languagePreference')}</p>
           <button className="nav-item" onClick={toggleLanguage}>
             <Languages size={20} />
@@ -77,6 +84,14 @@ function App() {
         {renderContent()}
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
