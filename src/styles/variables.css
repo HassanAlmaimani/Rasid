@@ -1,0 +1,42 @@
+:root {
+    /* Color Palette - Soft Ambient */
+    --color-bg: #fdfbf7;
+    /* Warm off-white */
+    --color-text-main: #2c2c2c;
+    --color-text-secondary: #666666;
+
+    --color-primary: #a3b18a;
+    /* Sage Green */
+    --color-primary-light: #dad7cd;
+
+    --color-secondary: #d4a373;
+    /* Muted Earth/Orange */
+    --color-accent: #b5838d;
+    /* Dusty Rose */
+
+    --color-card-bg: #ffffff;
+    --color-border: #e0e0e0;
+
+    --color-success: #a3b18a;
+    --color-danger: #e5989b;
+
+    /* Typography */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-size-base: 16px;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+}

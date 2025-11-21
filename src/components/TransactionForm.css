@@ -1,0 +1,97 @@
+.transaction-form-container {
+    background-color: var(--color-card-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.transaction-form-container h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-main);
+}
+
+.transaction-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+.type-selector {
+    flex-direction: row;
+    gap: var(--spacing-md);
+    background-color: var(--color-bg);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-md);
+}
+
+.type-btn {
+    flex: 1;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background: transparent;
+    transition: all 0.2s;
+}
+
+.type-btn.active {
+    background-color: var(--color-card-bg);
+    box-shadow: var(--shadow-sm);
+}
+
+.type-btn.active.income {
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+}
+
+.type-btn.active.expense {
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+}
+
+.submit-btn {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #8e9e75;
+    /* Darker sage */
+}

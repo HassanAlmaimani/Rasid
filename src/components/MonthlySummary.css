@@ -1,0 +1,124 @@
+.monthly-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.monthly-summary h2 {
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 200px;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.chart-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex: 1;
+}
+
+.bars-wrapper {
+    display: flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.bar {
+    width: 8px;
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s ease;
+    min-height: 1px;
+}
+
+.bar.income {
+    background-color: var(--color-success);
+    opacity: 0.8;
+}
+
+.bar.expense {
+    background-color: var(--color-danger);
+    opacity: 0.8;
+}
+
+.month-label {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+}
+
+.summary-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot.income {
+    background-color: var(--color-success);
+}
+
+.dot.expense {
+    background-color: var(--color-danger);
+}
+
+.summary-table-container {
+    overflow-x: auto;
+    background-color: var(--color-card-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+}
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.summary-table th {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.summary-table tr:last-child td {
+    border-bottom: none;
+}
+
+.summary-table td.positive {
+    color: var(--color-success);
+}
+
+.summary-table td.negative {
+    color: var(--color-danger);
+}

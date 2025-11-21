@@ -1,0 +1,124 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.card {
+    background-color: var(--color-card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.card h3 {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.card .amount {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.amount.positive {
+    color: var(--color-success);
+}
+
+.amount.negative {
+    color: var(--color-danger);
+}
+
+.recent-transactions h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+}
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.transaction-item {
+    background-color: var(--color-card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid transparent;
+    transition: transform 0.1s ease;
+}
+
+.transaction-item:hover {
+    transform: translateY(-1px);
+}
+
+.transaction-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.transaction-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.transaction-info .category {
+    font-weight: 500;
+    color: var(--color-text-main);
+}
+
+.transaction-info .date {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.transaction-item .amount {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.delete-transaction-btn {
+    background: none;
+    color: var(--color-text-secondary);
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0 var(--spacing-xs);
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.transaction-item:hover .delete-transaction-btn {
+    opacity: 1;
+}
+
+.delete-transaction-btn:hover {
+    color: var(--color-danger);
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: var(--spacing-lg);
+    background-color: var(--color-card-bg);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+}
