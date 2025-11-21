@@ -31,6 +31,8 @@ export const translations = {
         deleteTransaction: 'Delete transaction',
         deleteBudget: 'Delete budget',
         languagePreference: 'Language Preference :',
+        budgetBreakdown: 'Budget Breakdown',
+        noSpendingData: 'No spending data available yet.',
     },
     ar: {
         appTitle: 'راصِد',
@@ -64,5 +66,7 @@ export const translations = {
         deleteTransaction: 'حذف المعاملة',
         deleteBudget: 'حذف الميزانية',
         languagePreference: 'تفضيل اللغة :',
+        budgetBreakdown: 'تفصيل الميزانية',
+        noSpendingData: 'لا توجد بيانات إنفاق متاحة بعد.',
     }
 };

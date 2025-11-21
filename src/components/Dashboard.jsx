@@ -2,6 +2,7 @@ import React from 'react';
 import { useFinance } from '../contexts/FinanceContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatCurrency } from '../utils/format';
+import BudgetPieChart from './BudgetPieChart';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -27,6 +28,8 @@ const Dashboard = () => {
                     <p className="amount negative">{formatCurrency(expenses)}</p>
                 </div>
             </section>
+
+            <BudgetPieChart />
 
             <section className="recent-transactions">
                 <h3>{t('recentTransactions')}</h3>
