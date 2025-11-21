@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFinance } from '../contexts/FinanceContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatCurrency } from '../utils/format';
@@ -7,6 +7,7 @@ import './BudgetPieChart.css';
 const BudgetPieChart = () => {
     const { budgets, transactions } = useFinance();
     const { t } = useLanguage();
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
     // Calculate spending per budget category
     const getCategorySpending = () => {
@@ -105,13 +106,20 @@ const BudgetPieChart = () => {
                             fill={segment.color}
                             stroke="var(--color-bg)"
                             strokeWidth="2"
-                            className="pie-segment"
+                            className={`pie-segment ${hoveredIndex === index ? 'hovered' : ''}`}
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
                         />
                     ))}
                 </svg>
                 <div className="pie-chart-legend">
                     {segments.map((segment, index) => (
-                        <div key={index} className="legend-item">
+                        <div
+                            key={index}
+                            className={`legend-item ${hoveredIndex === index ? 'highlighted' : ''}`}
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                        >
                             <div
                                 className="legend-color"
                                 style={{ backgroundColor: segment.color }}
