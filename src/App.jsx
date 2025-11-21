@@ -65,6 +65,7 @@ function App() {
 
           <div className="nav-divider" style={{ margin: '1rem 0', marginTop: 'auto', borderTop: '1px solid var(--color-border)' }}></div>
 
+          <p className="language-label">{t('languagePreference')}</p>
           <button className="nav-item" onClick={toggleLanguage}>
             <Languages size={20} />
             <span>{language === 'en' ? 'العربية' : 'English'}</span>

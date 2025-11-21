@@ -171,3 +171,16 @@
     padding: var(--spacing-lg);
     width: 100%;
 }
+
+.language-label {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs);
+    padding-left: var(--spacing-md);
+    font-weight: 500;
+}
+
+[dir="rtl"] .language-label {
+    padding-left: 0;
+    padding-right: var(--spacing-md);
+}
