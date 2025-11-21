@@ -30,10 +30,10 @@ export const translations = {
         savings: 'Savings',
         deleteTransaction: 'Delete transaction',
         deleteBudget: 'Delete budget',
-        languagePreference: 'Language Preference',
+        languagePreference: 'Language Preference :',
     },
     ar: {
-        appTitle: 'راصد',
+        appTitle: 'راصِد',
         dashboard: 'لوحة التحكم',
         addTransaction: 'إضافة معاملة',
         budgets: 'الميزانيات',
@@ -63,6 +63,6 @@ export const translations = {
         savings: 'المدخرات',
         deleteTransaction: 'حذف المعاملة',
         deleteBudget: 'حذف الميزانية',
-        languagePreference: 'تفضيل اللغة',
+        languagePreference: 'تفضيل اللغة :',
     }
 };
