@@ -32,7 +32,7 @@ const BudgetPieChart = () => {
     if (categoryData.length === 0) {
         return (
             <div className="pie-chart-container">
-                <h3>{t('budgetBreakdown')}</h3>
+                <h3>{t('costBreakdown')}</h3>
                 <p className="empty-state">{t('noSpendingData')}</p>
             </div>
         );
@@ -45,6 +45,7 @@ const BudgetPieChart = () => {
         const centerX = 100;
         const centerY = 100;
 
+        // Expanded color palette with 15 distinct colors
         const colors = [
             '#a3b18a', // sage green
             '#d4a373', // muted earth
@@ -52,6 +53,15 @@ const BudgetPieChart = () => {
             '#8b9dc3', // soft blue
             '#c9ada7', // warm gray
             '#9c89b8', // soft purple
+            '#e07a5f', // terracotta
+            '#81b29a', // seafoam
+            '#f2cc8f', // golden sand
+            '#6a994e', // forest green
+            '#bc6c25', // burnt orange
+            '#588157', // olive
+            '#a98467', // taupe
+            '#d4a5a5', // dusty pink
+            '#9d8189', // mauve
         ];
 
         return categoryData.map((data, index) => {
@@ -96,7 +106,7 @@ const BudgetPieChart = () => {
 
     return (
         <div className="pie-chart-container">
-            <h3>{t('budgetBreakdown')}</h3>
+            <h3>{t('costBreakdown')}</h3>
             <div className="pie-chart-content">
                 <svg viewBox="0 0 200 200" className="pie-chart-svg">
                     {segments.map((segment, index) => (
