@@ -41,10 +41,63 @@
     color: var(--color-danger);
 }
 
-.recent-transactions h3 {
-    margin-bottom: var(--spacing-md);
+.transactions-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.transactions-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.transactions-header h3 {
     font-size: 1.1rem;
     color: var(--color-text-main);
+}
+
+.filter-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.filter-label {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.filter-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: var(--color-bg);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+    font-weight: 500;
 }
 
 .transaction-list {
@@ -121,4 +174,15 @@
     background-color: var(--color-card-bg);
     border-radius: var(--radius-md);
     border: 1px dashed var(--color-border);
+}
+
+@media (max-width: 768px) {
+    .filter-buttons {
+        flex-direction: column;
+    }
+
+    .filter-btn {
+        width: 100%;
+        text-align: center;
+    }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useFinance } from '../contexts/FinanceContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatCurrency } from '../utils/format';
@@ -10,7 +10,49 @@ const Dashboard = () => {
     const { t } = useLanguage();
     const { income, expenses, balance } = getSummary();
 
-    const recentTransactions = transactions.slice(0, 5);
+    // Filter states
+    const [filters, setFilters] = useState({
+        type: 'all', // 'all', 'expense', 'income'
+        sortBy: 'newest', // 'newest', 'oldest', 'ascending', 'descending'
+    });
+
+    // Toggle filter
+    const toggleFilter = (filterType, value) => {
+        setFilters(prev => ({
+            ...prev,
+            [filterType]: prev[filterType] === value ? (filterType === 'type' ? 'all' : 'newest') : value
+        }));
+    };
+
+    // Apply filters and sorting
+    const filteredTransactions = useMemo(() => {
+        let result = [...transactions];
+
+        // Filter by type
+        if (filters.type !== 'all') {
+            result = result.filter(t => t.type === filters.type);
+        }
+
+        // Sort
+        switch (filters.sortBy) {
+            case 'newest':
+                result.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case 'oldest':
+                result.sort((a, b) => new Date(a.date) - new Date(b.date));
+                break;
+            case 'ascending':
+                result.sort((a, b) => Number(a.amount) - Number(b.amount));
+                break;
+            case 'descending':
+                result.sort((a, b) => Number(b.amount) - Number(a.amount));
+                break;
+            default:
+                break;
+        }
+
+        return result;
+    }, [transactions, filters]);
 
     return (
         <div className="dashboard">
@@ -31,13 +73,56 @@ const Dashboard = () => {
 
             <BudgetPieChart />
 
-            <section className="recent-transactions">
-                <h3>{t('recentTransactions')}</h3>
-                {recentTransactions.length === 0 ? (
+            <section className="transactions-section">
+                <div className="transactions-header">
+                    <h3>{t('transactions')}</h3>
+                    <div className="filter-controls">
+                        <span className="filter-label">{t('filterBy')}</span>
+                        <div className="filter-buttons">
+                            <button
+                                className={`filter-btn ${filters.type === 'expense' ? 'active' : ''}`}
+                                onClick={() => toggleFilter('type', 'expense')}
+                            >
+                                {t('expensesOnly')}
+                            </button>
+                            <button
+                                className={`filter-btn ${filters.type === 'income' ? 'active' : ''}`}
+                                onClick={() => toggleFilter('type', 'income')}
+                            >
+                                {t('incomeOnly')}
+                            </button>
+                            <button
+                                className={`filter-btn ${filters.sortBy === 'ascending' ? 'active' : ''}`}
+                                onClick={() => toggleFilter('sortBy', 'ascending')}
+                            >
+                                {t('ascending')}
+                            </button>
+                            <button
+                                className={`filter-btn ${filters.sortBy === 'descending' ? 'active' : ''}`}
+                                onClick={() => toggleFilter('sortBy', 'descending')}
+                            >
+                                {t('descending')}
+                            </button>
+                            <button
+                                className={`filter-btn ${filters.sortBy === 'newest' ? 'active' : ''}`}
+                                onClick={() => toggleFilter('sortBy', 'newest')}
+                            >
+                                {t('newestFirst')}
+                            </button>
+                            <button
+                                className={`filter-btn ${filters.sortBy === 'oldest' ? 'active' : ''}`}
+                                onClick={() => toggleFilter('sortBy', 'oldest')}
+                            >
+                                {t('oldestFirst')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {filteredTransactions.length === 0 ? (
                     <p className="empty-state">{t('noTransactions')}</p>
                 ) : (
                     <ul className="transaction-list">
-                        {recentTransactions.map(t => (
+                        {filteredTransactions.map(t => (
                             <li key={t.id} className={`transaction-item ${t.type}`}>
                                 <div className="transaction-info">
                                     <span className="category">{t.category}</span>
