@@ -4,7 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import './TransactionForm.css';
 
 const TransactionForm = ({ onComplete }) => {
-    const { addTransaction } = useFinance();
+    const { addTransaction, budgets } = useFinance();
     const { t } = useLanguage();
     const [type, setType] = useState('expense');
     const [amount, setAmount] = useState('');
@@ -80,12 +80,20 @@ const TransactionForm = ({ onComplete }) => {
                         list="category-suggestions"
                     />
                     <datalist id="category-suggestions">
-                        <option value="Food" />
-                        <option value="Transport" />
-                        <option value="Utilities" />
-                        <option value="Entertainment" />
-                        <option value="Salary" />
-                        <option value="Freelance" />
+                        {budgets.length > 0 ? (
+                            budgets.map(budget => (
+                                <option key={budget.id} value={budget.category} />
+                            ))
+                        ) : (
+                            <>
+                                <option value="Food" />
+                                <option value="Transport" />
+                                <option value="Utilities" />
+                                <option value="Entertainment" />
+                                <option value="Salary" />
+                                <option value="Freelance" />
+                            </>
+                        )}
                     </datalist>
                 </div>
 
