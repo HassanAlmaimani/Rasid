@@ -3,6 +3,7 @@ import { useFinance } from '../contexts/FinanceContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatCurrency } from '../utils/format';
 import BudgetPieChart from './BudgetPieChart';
+import { Filter, ChevronDown } from 'lucide-react';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -15,6 +16,8 @@ const Dashboard = () => {
         type: 'all', // 'all', 'expense', 'income'
         sortBy: 'newest', // 'newest', 'oldest', 'ascending', 'descending'
     });
+
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     // Toggle filter
     const toggleFilter = (filterType, value) => {
@@ -54,6 +57,9 @@ const Dashboard = () => {
         return result;
     }, [transactions, filters]);
 
+    // Count active filters
+    const activeFilterCount = (filters.type !== 'all' ? 1 : 0) + (filters.sortBy !== 'newest' ? 1 : 0);
+
     return (
         <div className="dashboard">
             <section className="summary-cards">
@@ -76,46 +82,68 @@ const Dashboard = () => {
             <section className="transactions-section">
                 <div className="transactions-header">
                     <h3>{t('transactions')}</h3>
-                    <div className="filter-controls">
-                        <span className="filter-label">{t('filterBy')}</span>
-                        <div className="filter-buttons">
-                            <button
-                                className={`filter-btn ${filters.type === 'expense' ? 'active' : ''}`}
-                                onClick={() => toggleFilter('type', 'expense')}
-                            >
-                                {t('expensesOnly')}
-                            </button>
-                            <button
-                                className={`filter-btn ${filters.type === 'income' ? 'active' : ''}`}
-                                onClick={() => toggleFilter('type', 'income')}
-                            >
-                                {t('incomeOnly')}
-                            </button>
-                            <button
-                                className={`filter-btn ${filters.sortBy === 'ascending' ? 'active' : ''}`}
-                                onClick={() => toggleFilter('sortBy', 'ascending')}
-                            >
-                                {t('ascending')}
-                            </button>
-                            <button
-                                className={`filter-btn ${filters.sortBy === 'descending' ? 'active' : ''}`}
-                                onClick={() => toggleFilter('sortBy', 'descending')}
-                            >
-                                {t('descending')}
-                            </button>
-                            <button
-                                className={`filter-btn ${filters.sortBy === 'newest' ? 'active' : ''}`}
-                                onClick={() => toggleFilter('sortBy', 'newest')}
-                            >
-                                {t('newestFirst')}
-                            </button>
-                            <button
-                                className={`filter-btn ${filters.sortBy === 'oldest' ? 'active' : ''}`}
-                                onClick={() => toggleFilter('sortBy', 'oldest')}
-                            >
-                                {t('oldestFirst')}
-                            </button>
-                        </div>
+                    <div className="filter-dropdown-container">
+                        <button
+                            className="filter-dropdown-btn"
+                            onClick={() => setIsFilterOpen(!isFilterOpen)}
+                        >
+                            <Filter size={18} />
+                            <span>{t('filterBy')}</span>
+                            {activeFilterCount > 0 && (
+                                <span className="filter-badge">{activeFilterCount}</span>
+                            )}
+                            <ChevronDown size={18} className={`chevron ${isFilterOpen ? 'open' : ''}`} />
+                        </button>
+
+                        {isFilterOpen && (
+                            <div className="filter-dropdown-menu">
+                                <div className="filter-group">
+                                    <span className="filter-group-label">{t('type')}</span>
+                                    <button
+                                        className={`filter-option ${filters.type === 'expense' ? 'active' : ''}`}
+                                        onClick={() => toggleFilter('type', 'expense')}
+                                    >
+                                        {t('expensesOnly')}
+                                    </button>
+                                    <button
+                                        className={`filter-option ${filters.type === 'income' ? 'active' : ''}`}
+                                        onClick={() => toggleFilter('type', 'income')}
+                                    >
+                                        {t('incomeOnly')}
+                                    </button>
+                                </div>
+
+                                <div className="filter-divider"></div>
+
+                                <div className="filter-group">
+                                    <span className="filter-group-label">{t('sortBy')}</span>
+                                    <button
+                                        className={`filter-option ${filters.sortBy === 'ascending' ? 'active' : ''}`}
+                                        onClick={() => toggleFilter('sortBy', 'ascending')}
+                                    >
+                                        {t('ascending')}
+                                    </button>
+                                    <button
+                                        className={`filter-option ${filters.sortBy === 'descending' ? 'active' : ''}`}
+                                        onClick={() => toggleFilter('sortBy', 'descending')}
+                                    >
+                                        {t('descending')}
+                                    </button>
+                                    <button
+                                        className={`filter-option ${filters.sortBy === 'newest' ? 'active' : ''}`}
+                                        onClick={() => toggleFilter('sortBy', 'newest')}
+                                    >
+                                        {t('newestFirst')}
+                                    </button>
+                                    <button
+                                        className={`filter-option ${filters.sortBy === 'oldest' ? 'active' : ''}`}
+                                        onClick={() => toggleFilter('sortBy', 'oldest')}
+                                    >
+                                        {t('oldestFirst')}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
                 {filteredTransactions.length === 0 ? (
