@@ -4,7 +4,8 @@ import Dashboard from './components/Dashboard';
 import TransactionForm from './components/TransactionForm';
 import BudgetManager from './components/BudgetManager';
 import MonthlySummary from './components/MonthlySummary';
-import { LayoutDashboard, PlusCircle, Wallet, PieChart, Languages, TrendingUp, Moon, Sun } from 'lucide-react';
+import Settings from './components/Settings';
+import { LayoutDashboard, PlusCircle, Wallet, PieChart, Languages, TrendingUp, Moon, Sun, Settings as SettingsIcon } from 'lucide-react';
 import { useLanguage } from './contexts/LanguageContext';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 
@@ -23,6 +24,8 @@ function AppContent() {
         return <BudgetManager />;
       case 'reports':
         return <MonthlySummary />;
+      case 'settings':
+        return <Settings />;
       default:
         return <Dashboard />;
     }
@@ -63,6 +66,13 @@ function AppContent() {
           >
             <PieChart size={20} />
             <span>{t('reports')}</span>
+          </button>
+          <button
+            className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`}
+            onClick={() => setActiveTab('settings')}
+          >
+            <SettingsIcon size={20} />
+            <span>{t('settings')}</span>
           </button>
 
           <div className="nav-divider" style={{ margin: '1rem 0', marginTop: 'auto', borderTop: '1px solid var(--color-border)' }}></div>

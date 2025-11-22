@@ -1,59 +1,124 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { initDB, getAllData, addData, updateData, deleteData, STORES } from '../utils/database';
 
 const FinanceContext = createContext();
 
 export const useFinance = () => useContext(FinanceContext);
 
 export const FinanceProvider = ({ children }) => {
-    // Initial state from localStorage or defaults
-    const [transactions, setTransactions] = useState(() => {
-        const saved = localStorage.getItem('finance_transactions');
-        return saved ? JSON.parse(saved) : [];
-    });
+    const [transactions, setTransactions] = useState([]);
+    const [budgets, setBudgets] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const [budgets, setBudgets] = useState(() => {
-        const saved = localStorage.getItem('finance_budgets');
-        return saved ? JSON.parse(saved) : [];
-    });
-
-    // Persistence effects
+    // Initialize database and load data
     useEffect(() => {
-        localStorage.setItem('finance_transactions', JSON.stringify(transactions));
-    }, [transactions]);
+        const initializeData = async () => {
+            try {
+                // Initialize the database
+                await initDB();
 
-    useEffect(() => {
-        localStorage.setItem('finance_budgets', JSON.stringify(budgets));
-    }, [budgets]);
+                // Check if we need to migrate from localStorage
+                const localTransactions = localStorage.getItem('finance_transactions');
+                const localBudgets = localStorage.getItem('finance_budgets');
+
+                // Load data from IndexedDB
+                const dbTransactions = await getAllData(STORES.TRANSACTIONS);
+                const dbBudgets = await getAllData(STORES.BUDGETS);
+
+                // If IndexedDB is empty but localStorage has data, migrate it
+                if (dbTransactions.length === 0 && localTransactions) {
+                    console.log('Migrating transactions from localStorage to IndexedDB...');
+                    const parsedTransactions = JSON.parse(localTransactions);
+                    for (const transaction of parsedTransactions) {
+                        await addData(STORES.TRANSACTIONS, transaction);
+                    }
+                    setTransactions(parsedTransactions);
+                    // Clear localStorage after migration
+                    localStorage.removeItem('finance_transactions');
+                } else {
+                    setTransactions(dbTransactions);
+                }
+
+                if (dbBudgets.length === 0 && localBudgets) {
+                    console.log('Migrating budgets from localStorage to IndexedDB...');
+                    const parsedBudgets = JSON.parse(localBudgets);
+                    for (const budget of parsedBudgets) {
+                        await addData(STORES.BUDGETS, budget);
+                    }
+                    setBudgets(parsedBudgets);
+                    // Clear localStorage after migration
+                    localStorage.removeItem('finance_budgets');
+                } else {
+                    setBudgets(dbBudgets);
+                }
+
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Error initializing database:', error);
+                setIsLoading(false);
+            }
+        };
+
+        initializeData();
+    }, []);
 
     // Transaction Actions
-    const addTransaction = (transaction) => {
+    const addTransaction = async (transaction) => {
         const newTransaction = {
             id: Date.now().toString(),
             date: new Date().toISOString(),
             ...transaction
         };
-        setTransactions(prev => [newTransaction, ...prev]);
+
+        try {
+            await addData(STORES.TRANSACTIONS, newTransaction);
+            setTransactions(prev => [newTransaction, ...prev]);
+        } catch (error) {
+            console.error('Error adding transaction:', error);
+        }
     };
 
-    const deleteTransaction = (id) => {
-        setTransactions(prev => prev.filter(t => t.id !== id));
+    const deleteTransaction = async (id) => {
+        try {
+            await deleteData(STORES.TRANSACTIONS, id);
+            setTransactions(prev => prev.filter(t => t.id !== id));
+        } catch (error) {
+            console.error('Error deleting transaction:', error);
+        }
     };
 
     // Budget Actions
-    const addBudget = (budget) => {
+    const addBudget = async (budget) => {
         const newBudget = {
             id: Date.now().toString(),
             ...budget
         };
-        setBudgets(prev => [...prev, newBudget]);
+
+        try {
+            await addData(STORES.BUDGETS, newBudget);
+            setBudgets(prev => [...prev, newBudget]);
+        } catch (error) {
+            console.error('Error adding budget:', error);
+        }
     };
 
-    const updateBudget = (id, updatedBudget) => {
-        setBudgets(prev => prev.map(b => b.id === id ? { ...b, ...updatedBudget } : b));
+    const updateBudget = async (id, updatedBudget) => {
+        try {
+            const budgetToUpdate = { id, ...updatedBudget };
+            await updateData(STORES.BUDGETS, budgetToUpdate);
+            setBudgets(prev => prev.map(b => b.id === id ? budgetToUpdate : b));
+        } catch (error) {
+            console.error('Error updating budget:', error);
+        }
     };
 
-    const deleteBudget = (id) => {
-        setBudgets(prev => prev.filter(b => b.id !== id));
+    const deleteBudget = async (id) => {
+        try {
+            await deleteData(STORES.BUDGETS, id);
+            setBudgets(prev => prev.filter(b => b.id !== id));
+        } catch (error) {
+            console.error('Error deleting budget:', error);
+        }
     };
 
     // Helper to get summary
@@ -81,7 +146,8 @@ export const FinanceProvider = ({ children }) => {
         addBudget,
         updateBudget,
         deleteBudget,
-        getSummary
+        getSummary,
+        isLoading
     };
 
     return (
