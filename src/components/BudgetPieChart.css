@@ -4,6 +4,7 @@
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--color-border);
+    margin-bottom: 2rem;
 }
 
 .pie-chart-container h3 {
@@ -16,7 +17,7 @@
 .pie-chart-content {
     display: flex;
     gap: var(--spacing-xl);
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
 }
 
@@ -42,9 +43,9 @@
     flex: 1;
     min-width: 250px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: var(--spacing-sm);
-    align-content: start;
+    align-content: center;
 }
 
 .legend-item {
@@ -119,17 +120,5 @@
     .pie-chart-legend {
         width: 100%;
         grid-template-columns: 1fr;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    .pie-chart-legend {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 1025px) {
-    .pie-chart-legend {
-        grid-template-columns: repeat(3, 1fr);
     }
 }
