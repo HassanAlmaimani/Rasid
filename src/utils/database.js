@@ -10,8 +10,7 @@ const DB_VERSION = 2;
 const STORES = {
     TRANSACTIONS: 'transactions',
     BUDGETS: 'budgets',
-    SETTINGS: 'settings',
-    GOALS: 'goals'
+    SETTINGS: 'settings'
 };
 
 /**
@@ -50,12 +49,6 @@ export const initDB = () => {
             // Create settings store
             if (!db.objectStoreNames.contains(STORES.SETTINGS)) {
                 db.createObjectStore(STORES.SETTINGS, { keyPath: 'key' });
-            }
-
-            // Create goals store
-            if (!db.objectStoreNames.contains(STORES.GOALS)) {
-                const goalsStore = db.createObjectStore(STORES.GOALS, { keyPath: 'id' });
-                goalsStore.createIndex('targetDate', 'targetDate', { unique: false });
             }
         };
     });

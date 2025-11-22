@@ -5,8 +5,7 @@ import TransactionForm from './components/TransactionForm';
 import BudgetManager from './components/BudgetManager';
 import MonthlySummary from './components/MonthlySummary';
 import Settings from './components/Settings';
-import GoalsManager from './components/GoalsManager';
-import { LayoutDashboard, PlusCircle, Wallet, PieChart, Languages, TrendingUp, Moon, Sun, Settings as SettingsIcon, Target } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, Wallet, PieChart, Languages, TrendingUp, Moon, Sun, Settings as SettingsIcon } from 'lucide-react';
 import { useLanguage } from './contexts/LanguageContext';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 
@@ -23,8 +22,6 @@ function AppContent() {
         return <TransactionForm onComplete={() => setActiveTab('dashboard')} />;
       case 'budgets':
         return <BudgetManager />;
-      case 'goals':
-        return <GoalsManager />;
       case 'reports':
         return <MonthlySummary />;
       case 'settings':
@@ -62,13 +59,6 @@ function AppContent() {
           >
             <Wallet size={20} />
             <span>{t('budgets')}</span>
-          </button>
-          <button
-            className={`nav-item ${activeTab === 'goals' ? 'active' : ''}`}
-            onClick={() => setActiveTab('goals')}
-          >
-            <Target size={20} />
-            <span>{t('goals')}</span>
           </button>
           <button
             className={`nav-item ${activeTab === 'reports' ? 'active' : ''}`}

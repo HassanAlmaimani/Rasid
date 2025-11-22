@@ -8,7 +8,6 @@ export const useFinance = () => useContext(FinanceContext);
 export const FinanceProvider = ({ children }) => {
     const [transactions, setTransactions] = useState([]);
     const [budgets, setBudgets] = useState([]);
-    const [goals, setGoals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     // Initialize database and load data
@@ -25,7 +24,6 @@ export const FinanceProvider = ({ children }) => {
                 // Load data from IndexedDB
                 const dbTransactions = await getAllData(STORES.TRANSACTIONS);
                 const dbBudgets = await getAllData(STORES.BUDGETS);
-                const dbGoals = await getAllData(STORES.GOALS);
 
                 // If IndexedDB is empty but localStorage has data, migrate it
                 if (dbTransactions.length === 0 && localTransactions) {
@@ -53,8 +51,6 @@ export const FinanceProvider = ({ children }) => {
                 } else {
                     setBudgets(dbBudgets);
                 }
-
-                setGoals(dbGoals);
 
                 setIsLoading(false);
             } catch (error) {
@@ -125,41 +121,6 @@ export const FinanceProvider = ({ children }) => {
         }
     };
 
-    // Goal Actions
-    const addGoal = async (goal) => {
-        const newGoal = {
-            id: Date.now().toString(),
-            currentAmount: 0,
-            ...goal
-        };
-
-        try {
-            await addData(STORES.GOALS, newGoal);
-            setGoals(prev => [...prev, newGoal]);
-        } catch (error) {
-            console.error('Error adding goal:', error);
-        }
-    };
-
-    const updateGoal = async (id, updatedGoal) => {
-        try {
-            const goalToUpdate = { id, ...updatedGoal };
-            await updateData(STORES.GOALS, goalToUpdate);
-            setGoals(prev => prev.map(g => g.id === id ? goalToUpdate : g));
-        } catch (error) {
-            console.error('Error updating goal:', error);
-        }
-    };
-
-    const deleteGoal = async (id) => {
-        try {
-            await deleteData(STORES.GOALS, id);
-            setGoals(prev => prev.filter(g => g.id !== id));
-        } catch (error) {
-            console.error('Error deleting goal:', error);
-        }
-    };
-
     // Helper to get summary
     const getSummary = () => {
         const income = transactions
@@ -180,15 +141,11 @@ export const FinanceProvider = ({ children }) => {
     const value = {
         transactions,
         budgets,
-        goals,
         addTransaction,
         deleteTransaction,
         addBudget,
         updateBudget,
         deleteBudget,
-        addGoal,
-        updateGoal,
-        deleteGoal,
         getSummary,
         isLoading
     };
