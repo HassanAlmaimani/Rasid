@@ -130,12 +130,14 @@ const BudgetPieChart = () => {
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            <div
-                                className="legend-color"
-                                style={{ backgroundColor: segment.color }}
-                            ></div>
                             <div className="legend-info">
-                                <span className="legend-category">{segment.category}</span>
+                                <div className="legend-header">
+                                    <div
+                                        className="legend-color"
+                                        style={{ backgroundColor: segment.color }}
+                                    ></div>
+                                    <span className="legend-category">{segment.category}</span>
+                                </div>
                                 <span className="legend-details">
                                     {formatCurrency(segment.spent)} ({segment.percentage}%)
                                 </span>
