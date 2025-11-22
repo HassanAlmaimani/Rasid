@@ -1,36 +1,41 @@
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .summary-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .card {
     background-color: var(--color-card-bg);
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .card h3 {
-    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
     color: var(--color-text-secondary);
-    font-weight: 500;
 }
 
 .card .amount {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.75rem;
+    font-weight: 700;
     color: var(--color-text-main);
+    margin: 0;
 }
 
 .amount.positive {
@@ -41,22 +46,107 @@
     color: var(--color-danger);
 }
 
-.transactions-section {
+/* Goals Overview Section */
+.goals-overview-section {
+    background-color: var(--color-card-bg);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.section-header h3 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+    font-weight: 600;
+}
+
+.goals-horizontal-list {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+}
+
+.goals-horizontal-list::-webkit-scrollbar {
+    height: 6px;
+}
+
+.goals-horizontal-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.goals-horizontal-list::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 3px;
+}
+
+.goal-mini-card {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s;
+}
+
+.goal-mini-card:hover {
+    transform: translateY(-2px);
+}
+
+.goal-mini-info {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+}
+
+.goal-mini-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text-main);
+    margin-bottom: 0.25rem;
+}
+
+.goal-mini-amount {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+/* Transactions Section */
+.transactions-section {
+    background-color: var(--color-card-bg);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
 }
 
 .transactions-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
 }
 
 .transactions-header h3 {
-    font-size: 1.1rem;
+    margin: 0;
     color: var(--color-text-main);
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .filter-dropdown-container {
@@ -66,30 +156,29 @@
 .filter-dropdown-btn {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--color-card-bg);
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
+    border-radius: 0.5rem;
     color: var(--color-text-main);
     cursor: pointer;
+    font-size: 0.9rem;
     transition: all 0.2s;
 }
 
 .filter-dropdown-btn:hover {
-    background-color: var(--color-bg);
-    border-color: var(--color-primary);
+    background-color: var(--color-card-bg);
+    /* Slightly lighter than bg */
 }
 
 .filter-badge {
     background-color: var(--color-primary);
     color: white;
     font-size: 0.75rem;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 10px;
-    min-width: 18px;
+    padding: 0.1rem 0.4rem;
+    border-radius: 1rem;
+    min-width: 1.2rem;
     text-align: center;
 }
 
@@ -103,27 +192,23 @@
 
 .filter-dropdown-menu {
     position: absolute;
-    top: calc(100% + 4px);
+    top: 100%;
     right: 0;
+    margin-top: 0.5rem;
     background-color: var(--color-card-bg);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: 0.75rem;
     box-shadow: var(--shadow-md);
-    padding: var(--spacing-sm);
     min-width: 200px;
-    z-index: 10;
-    animation: slideDown 0.2s ease;
-}
-
-[dir="rtl"] .filter-dropdown-menu {
-    right: auto;
-    left: 0;
+    z-index: 100;
+    padding: 0.5rem;
+    animation: slideDown 0.2s ease-out;
 }
 
 @keyframes slideDown {
     from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateY(-10px);
     }
 
     to {
@@ -135,32 +220,27 @@
 .filter-group {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: 0.25rem;
 }
 
 .filter-group-label {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.75rem;
     color: var(--color-text-secondary);
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: var(--spacing-xs) var(--spacing-sm);
 }
 
 .filter-option {
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: transparent;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    background: none;
     border: none;
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
     color: var(--color-text-main);
     cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-}
-
-[dir="rtl"] .filter-option {
-    text-align: right;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
 }
 
 .filter-option:hover {
@@ -168,49 +248,44 @@
 }
 
 .filter-option.active {
-    background-color: var(--color-primary);
-    color: white;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
     font-weight: 500;
 }
 
 .filter-divider {
     height: 1px;
     background-color: var(--color-border);
-    margin: var(--spacing-sm) 0;
+    margin: 0.5rem 0;
 }
 
 .transaction-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .transaction-item {
-    background-color: var(--color-card-bg);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-sm);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid transparent;
-    transition: transform 0.1s ease;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.2s;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
 }
 
 .transaction-item:hover {
-    transform: translateY(-1px);
-}
-
-.transaction-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
+    background-color: var(--color-bg);
 }
 
 .transaction-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0.25rem;
 }
 
 .transaction-info .category {
@@ -219,23 +294,31 @@
 }
 
 .transaction-info .date {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     color: var(--color-text-secondary);
 }
 
-.transaction-item .amount {
+.transaction-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.transaction-actions .amount {
     font-weight: 600;
-    font-size: 1rem;
 }
 
 .delete-transaction-btn {
     background: none;
+    border: none;
     color: var(--color-text-secondary);
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem;
     line-height: 1;
-    padding: 0 var(--spacing-xs);
+    border-radius: 50%;
+    transition: all 0.2s;
     opacity: 0;
-    transition: opacity 0.2s, color 0.2s;
 }
 
 .transaction-item:hover .delete-transaction-btn {
@@ -243,32 +326,12 @@
 }
 
 .delete-transaction-btn:hover {
-    color: var(--color-danger);
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
 }
 
 .empty-state {
     text-align: center;
     color: var(--color-text-secondary);
-    padding: var(--spacing-lg);
-    background-color: var(--color-card-bg);
-    border-radius: var(--radius-md);
-    border: 1px dashed var(--color-border);
-}
-
-@media (max-width: 768px) {
-    .transactions-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .filter-dropdown-btn {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .filter-dropdown-menu {
-        left: 0;
-        right: 0;
-        width: 100%;
-    }
+    padding: 2rem;
 }

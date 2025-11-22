@@ -4,13 +4,14 @@
  */
 
 const DB_NAME = 'RasidFinanceDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 // Object store names
 const STORES = {
     TRANSACTIONS: 'transactions',
     BUDGETS: 'budgets',
-    SETTINGS: 'settings'
+    SETTINGS: 'settings',
+    GOALS: 'goals'
 };
 
 /**
@@ -49,6 +50,12 @@ export const initDB = () => {
             // Create settings store
             if (!db.objectStoreNames.contains(STORES.SETTINGS)) {
                 db.createObjectStore(STORES.SETTINGS, { keyPath: 'key' });
+            }
+
+            // Create goals store
+            if (!db.objectStoreNames.contains(STORES.GOALS)) {
+                const goalsStore = db.createObjectStore(STORES.GOALS, { keyPath: 'id' });
+                goalsStore.createIndex('targetDate', 'targetDate', { unique: false });
             }
         };
     });

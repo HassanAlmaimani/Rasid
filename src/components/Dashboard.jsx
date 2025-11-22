@@ -3,11 +3,12 @@ import { useFinance } from '../contexts/FinanceContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatCurrency } from '../utils/format';
 import BudgetPieChart from './BudgetPieChart';
-import { Filter, ChevronDown } from 'lucide-react';
+import GoalProgress from './GoalProgress';
+import { Filter, ChevronDown, Target } from 'lucide-react';
 import './Dashboard.css';
 
 const Dashboard = () => {
-    const { getSummary, transactions, deleteTransaction } = useFinance();
+    const { getSummary, transactions, deleteTransaction, goals } = useFinance();
     const { t } = useLanguage();
     const { income, expenses, balance } = getSummary();
 
@@ -76,6 +77,33 @@ const Dashboard = () => {
                     <p className="amount negative">{formatCurrency(expenses)}</p>
                 </div>
             </section>
+
+            {goals.length > 0 && (
+                <section className="goals-overview-section">
+                    <div className="section-header">
+                        <h3>
+                            <Target size={20} style={{ marginRight: '8px' }} />
+                            {t('goals')}
+                        </h3>
+                    </div>
+                    <div className="goals-horizontal-list">
+                        {goals.map(goal => {
+                            const percentage = Math.min((goal.currentAmount / goal.targetAmount) * 100, 100);
+                            return (
+                                <div key={goal.id} className="goal-mini-card">
+                                    <div className="goal-mini-progress">
+                                        <GoalProgress percentage={percentage} radius={25} stroke={4} />
+                                    </div>
+                                    <div className="goal-mini-info">
+                                        <span className="goal-mini-name">{goal.name}</span>
+                                        <span className="goal-mini-amount">{formatCurrency(goal.currentAmount)} / {formatCurrency(goal.targetAmount)}</span>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </section>
+            )}
 
             <BudgetPieChart />
 

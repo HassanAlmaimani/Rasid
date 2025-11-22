@@ -10,6 +10,7 @@
     margin-bottom: var(--spacing-md);
     font-size: 1.1rem;
     color: var(--color-text-main);
+    font-weight: 600;
 }
 
 .pie-chart-content {

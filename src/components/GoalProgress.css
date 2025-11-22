@@ -1,0 +1,30 @@
+.goal-progress-circle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.goal-progress-svg {
+    transform: rotate(-90deg);
+}
+
+.goal-progress-bg {
+    fill: transparent;
+    stroke: var(--color-border);
+}
+
+.goal-progress-fg {
+    fill: transparent;
+    stroke: var(--color-primary);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.35s;
+    transform-origin: 50% 50%;
+}
+
+.goal-progress-text {
+    position: absolute;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
